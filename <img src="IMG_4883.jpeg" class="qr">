@@ -1,129 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Aurex Trade – Account Overview</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova NFT</title>
 
 <style>
+
 body{
-  margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
+background:#0b0b0b;
+font-family:Arial;
+margin:0;
+color:white;
+text-align:center;
 }
-.container{
-  max-width:420px;
-  margin:auto;
-  padding:25px;
-}
+
 .header{
-  text-align:center;
-  margin-bottom:20px;
+background:black;
+padding:18px;
+font-size:22px;
+font-weight:bold;
+border-bottom:1px solid #333;
 }
-.header h1{
-  margin:0;
-  letter-spacing:1px;
+
+.container{
+padding:20px;
+max-width:420px;
+margin:auto;
 }
-.header p{
-  font-size:14px;
-  color:#cfcfcf;
-}
+
 .card{
-  background:rgba(255,255,255,0.08);
-  border-radius:12px;
-  padding:20px;
+background:#141414;
+border-radius:15px;
+padding:20px;
+margin-top:20px;
+box-shadow:0 0 15px rgba(255,215,0,0.2);
 }
-.row{
-  display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  font-size:14px;
+
+.nft-title{
+color:#ffd700;
+font-size:20px;
+margin-bottom:10px;
 }
-.row:last-child{border:none;}
-.label{color:#d0d0d0;}
-.value{font-weight:bold;color:#00ffcc;}
-.status{color:#00ff66;font-weight:bold;}
-.graph{
-  margin-top:20px;
-  background:#0b1f2a;
-  border-radius:10px;
-  padding:15px;
+
+.btn{
+background:linear-gradient(90deg,#ffe88a,#ffcc33);
+border:none;
+padding:12px;
+border-radius:10px;
+width:100%;
+font-size:16px;
+cursor:pointer;
+margin-top:15px;
 }
-.graph-title{
-  font-size:13px;
-  margin-bottom:10px;
-  color:#cfcfcf;
+
+.copy-btn{
+background:#222;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+margin-top:10px;
+cursor:pointer;
 }
-svg polyline{
-  fill:none;
-  stroke:#00ffcc;
-  stroke-width:3;
+
+.form{
+display:none;
+margin-top:20px;
 }
-.footer{
-  margin-top:25px;
-  text-align:center;
-  font-size:12px;
-  color:#bdbdbd;
+
+input{
+width:90%;
+padding:12px;
+margin:10px;
+border-radius:8px;
+border:none;
 }
+
+.address{
+background:#111;
+padding:10px;
+border-radius:8px;
+word-break:break-all;
+margin-top:10px;
+}
+
+.qr{
+width:220px;
+margin-top:15px;
+border-radius:10px;
+}
+
+.success{
+color:#00ff9c;
+margin-top:20px;
+}
+
 </style>
+
 </head>
 
 <body>
 
+<div class="header">
+Nova NFT
+</div>
+
 <div class="container">
 
-  <div class="header">
-    <h1>AUREX TRADE</h1>
-    <p>AI Trading Account (Demo View)</p>
-  </div>
+<div class="card">
 
-  <div class="card">
+<div class="nft-title">
+Ecology Finance
+</div>
 
-    <div class="row">
-      <span class="label">User ID</span>
-      <span class="value" id="uid">AXR00000</span>
-    </div>
+<p>Buy Ecology Finance to activate your wallet withdrawal system.</p>
 
-    <div class="row">
-      <span class="label">Wallet Fund</span>
-      <span class="value">$<span id="wallet">0</span></span>
-    </div>
+<p style="color:#ffd700">
+Minimum purchase: 3000 USDT
+</p>
 
-    <div class="row">
-      <span class="label">Account Status</span>
-      <span class="status">Active</span>
-    </div>
+<button class="btn" id="investBtn" onclick="showForm()">
+Invest Now
+</button>
 
-    <div class="row">
-      <span class="label">Trade Status</span>
-      <span class="value">Live Running</span>
-    </div>
+<div class="form" id="form">
 
-  </div>
+<p>BEP20 USDT Deposit Address</p>
 
-  <div class="graph">
-    <div class="graph-title">AI Trade Performance (Demo)</div>
-    <svg width="100%" height="120" viewBox="0 0 300 120">
-      <polyline points="0,90 40,70 80,75 120,50 160,55 200,30 240,35 300,20"/>
-    </svg>
-  </div>
+<div class="address" id="wallet">
+0xcc24EC6c4E82CA8c0D1f96C71E149a030a4663B8
+</div>
 
-  <div class="footer">
-    Demo Account Display Only<br>
-    ©️ 2025 Aurex Trade
-  </div>
+<button class="copy-btn" onclick="copyAddress()">
+Copy Address
+</button>
+
+<br>
+
+<img src="deposit-qr.png" class="qr">
+
+<input type="text" placeholder="Enter Username">
+
+<input type="text" placeholder="Enter UID">
+
+<button class="btn" onclick="submitForm()">
+Submit
+</button>
+
+</div>
+
+<p id="msg" class="success"></p>
+
+</div>
 
 </div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
-const uid = params.get("uid");
-const wallet = params.get("wallet");
 
-if(uid) document.getElementById("uid").innerText = uid;
-if(wallet) document.getElementById("wallet").innerText = wallet;
+function showForm(){
+document.getElementById("form").style.display="block";
+document.getElementById("investBtn").style.display="none";
+}
+
+function copyAddress(){
+var text = document.getElementById("wallet").innerText;
+navigator.clipboard.writeText(text);
+alert("Address copied successfully");
+}
+
+function submitForm(){
+document.getElementById("msg").innerHTML =
+"Successfully! Your Ecology Finance purchase has been submitted. It will be updated in your wallet within 3-4 days.";
+}
+
 </script>
 
 </body>
