@@ -5,7 +5,7 @@
 <title>Nova NFT</title>
 
 <style>
-
+<script src="https://unpkg.com/html5-qrcode"></script>
 body{
 background:#0b0b0b;
 font-family:Arial;
@@ -128,7 +128,8 @@ Invest Now
 <div class="address" id="wallet">
 0xcc24EC6c4E82CA8c0D1f96C71E149a030a4663B8
 </div>
-
+<div id="reader" style="width:250px;margin:auto;margin-top:20px;"></div>
+<p id="scan-result"></p>
 <button class="copy-btn" onclick="copyAddress()">
 Copy Address
 </button>
@@ -172,6 +173,20 @@ document.getElementById("msg").innerHTML =
 }
 
 </script>
+<script>
 
+function onScanSuccess(decodedText, decodedResult) {
+    document.getElementById("scan-result").innerHTML = 
+    "QR scanned: " + decodedText;
+}
+
+let html5QrcodeScanner = new Html5QrcodeScanner(
+    "reader",
+    { fps: 10, qrbox: 200 }
+);
+
+html5QrcodeScanner.render(onScanSuccess);
+
+</script>
 </body>
 </html>
